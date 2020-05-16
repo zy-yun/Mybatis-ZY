@@ -24,7 +24,7 @@ public class Invocation {
     private Object[] args;
 
 
-    public Invocation(Object target, Method method, Object[] args){
+    public Invocation(Object target, Method method, Object[] args) {
         this.target = target;
         this.method = method;
         this.args = args;
@@ -34,15 +34,15 @@ public class Invocation {
 
     /**
      * 包装类的执行代理对象方法
+     *
      * @return
      * @throws InvocationTargetException
      * @throws IllegalAccessException
      */
     public Object proceed() throws InvocationTargetException, IllegalAccessException {
 
-        return method.invoke(target,args);
+        return method.invoke(target, args);
     }
-
 
 
     public Object getTarget() {

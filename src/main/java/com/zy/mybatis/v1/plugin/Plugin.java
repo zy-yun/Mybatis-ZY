@@ -8,6 +8,8 @@ import java.lang.reflect.Proxy;
 
 /**
  * 代理类，用于代理被拦截的对象，同时提供了创建代理类的方法
+ *
+ * @Author zhangyun
  */
 public class Plugin implements InvocationHandler {
 
@@ -43,7 +45,7 @@ public class Plugin implements InvocationHandler {
             }
         }
         //非被拦截对象，执行原有逻辑
-        return method.invoke(target,method,args);
+        return method.invoke(target, method, args);
 
 
     }

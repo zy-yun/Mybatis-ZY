@@ -19,7 +19,8 @@ public interface Interceptor {
     Object interceptor(Invocation invocation) throws InvocationTargetException, IllegalAccessException;
 
     /**
-     *对被拦截对象进行代理
+     * 对被拦截对象进行代理
+     *
      * @param target
      * @return
      */

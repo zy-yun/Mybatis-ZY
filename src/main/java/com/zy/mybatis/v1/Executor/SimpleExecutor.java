@@ -1,23 +1,29 @@
 package com.zy.mybatis.v1.Executor;
 
 import com.zy.mybatis.v1.DataSourceProperties;
-import com.zy.mybatis.v1.Executor.Executor;
 import com.zy.mybatis.v1.domain.Blog;
-import com.zy.mybatis.v1.plugin.InterceptorChain;
 
 import java.sql.*;
 
+/**
+ * 默认执行器实现类
+ *
+ * @Author zhangyun
+ */
 public class SimpleExecutor implements Executor {
 
+    /**
+     * 数据库配置文件
+     */
     private DataSourceProperties sourceProperties;
 
 
-    public SimpleExecutor(DataSourceProperties sourceProperties){
+    public SimpleExecutor(DataSourceProperties sourceProperties) {
 
         this.sourceProperties = sourceProperties;
     }
 
-    public <T> T query(String sql,Object param) {
+    public <T> T query(String sql, Object param) {
 
         //JDBC封装
         Blog blog = new Blog();
@@ -25,12 +31,12 @@ public class SimpleExecutor implements Executor {
         Connection conn = null;
         try {
             Class.forName(sourceProperties.getDriverClassName());
-            conn = DriverManager.getConnection(sourceProperties.getUrl(),sourceProperties.getUsername(),sourceProperties.getPassword());
+            conn = DriverManager.getConnection(sourceProperties.getUrl(), sourceProperties.getUsername(), sourceProperties.getPassword());
             statement = conn.createStatement();
-            String exeSql = sql.replace("?",param.toString());
+            String exeSql = sql.replace("?", param.toString());
             ResultSet resultSet = statement.executeQuery(exeSql);
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String book = resultSet.getString("book");
@@ -42,14 +48,14 @@ public class SimpleExecutor implements Executor {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (null!=statement){
+            if (null != statement) {
                 try {
                     statement.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
             }
-            if (null!=conn){
+            if (null != conn) {
                 try {
                     conn.close();
                 } catch (SQLException e) {
@@ -57,6 +63,6 @@ public class SimpleExecutor implements Executor {
                 }
             }
         }
-        return (T)blog;
+        return (T) blog;
     }
 }

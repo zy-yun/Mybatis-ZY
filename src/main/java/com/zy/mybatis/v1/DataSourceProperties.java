@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
 public class DataSourceProperties {
 
 
-
     private static final ResourceBundle dataSourceBinding;
     public static final ResourceBundle sqlSourceBinding;
 
@@ -28,6 +27,9 @@ public class DataSourceProperties {
     private static final String username = dataSourceBinding.getString("jdbc.username");
     private static final String password = dataSourceBinding.getString("jdbc.password");
     private static final String driverClassName = dataSourceBinding.getString("jdbc.driver-class-name");
+    /**
+     * 插件对象相对路径获取，包名+类名
+     */
     private static final String pluginPath = dataSourceBinding.getString("mybatis.plugin");
 
     public String getUrl() {

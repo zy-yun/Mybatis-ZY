@@ -9,6 +9,9 @@ import java.lang.reflect.InvocationTargetException;
 
 /**
  * 自定义插件
+ * 实现功能：实现查询sql及参数的打印
+ *
+ * @Author zhangyun
  */
 @Intercepts("query")
 public class MySqlPlugin implements Interceptor {
@@ -17,12 +20,12 @@ public class MySqlPlugin implements Interceptor {
     public Object interceptor(Invocation invocation) throws InvocationTargetException, IllegalAccessException {
         Object statement = invocation.getArgs()[0];
         Object arg = invocation.getArgs()[1];
-        System.out.println("查询的sql为："+statement.toString());
-        System.out.println("查询的参数为："+arg.toString());
+        System.out.println("查询的sql为：" + statement.toString());
+        System.out.println("查询的参数为：" + arg.toString());
         return invocation.proceed();
     }
 
     public Object plugin(Object target) {
-        return Plugin.wrap(target,this);
+        return Plugin.wrap(target, this);
     }
 }

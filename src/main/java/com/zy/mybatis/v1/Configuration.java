@@ -9,20 +9,25 @@ import java.lang.reflect.Proxy;
 
 /**
  * 全局配置信息类
+ *
+ * @Author zhangyun
  */
 public class Configuration {
 
     private DataSourceProperties dataSourceProperties;
 
+    /**
+     * 拦截器链对象
+     */
     private InterceptorChain interceptorChain = new InterceptorChain();
 
-    public Configuration(DataSourceProperties dataSourceProperties){
+    public Configuration(DataSourceProperties dataSourceProperties) {
         this.dataSourceProperties = dataSourceProperties;
         //初始化插件配置
         String[] split = dataSourceProperties.getPluginPath().split(",");
         Interceptor interceptor = null;
-        for (String plugin: split
-             ) {
+        for (String plugin : split
+        ) {
             try {
                 interceptor = (Interceptor) Class.forName(plugin).newInstance();
             } catch (InstantiationException e) {
@@ -39,6 +44,7 @@ public class Configuration {
 
     /**
      * 根据statementId获取指定的执行sql
+     *
      * @param statementId
      * @return
      */
@@ -49,20 +55,26 @@ public class Configuration {
 
     /**
      * 获取代理clazz mapper接口的代理对象
+     *
      * @param clazz
      * @param sqlSession
      * @param <T>
      * @return
      */
-    public <T> T getMapper(Class clazz,ZYSqlSession sqlSession) {
+    public <T> T getMapper(Class clazz, ZYSqlSession sqlSession) {
 
-        return (T)Proxy.newProxyInstance(this.getClass().getClassLoader(),new Class[]{clazz},new MapperProxy(sqlSession));
+        return (T) Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[]{clazz}, new MapperProxy(sqlSession));
     }
 
-    public Executor newExecutor(){
+    /**
+     * 创建执行器，可能为代理对象
+     *
+     * @return
+     */
+    public Executor newExecutor() {
         Executor executor = new SimpleExecutor(dataSourceProperties);
-        if (interceptorChain.hasPlugin()){
-            return (Executor)interceptorChain.pluginAll(executor);
+        if (interceptorChain.hasPlugin()) {
+            return (Executor) interceptorChain.pluginAll(executor);
         }
         return executor;
     }
