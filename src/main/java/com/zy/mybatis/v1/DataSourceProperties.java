@@ -28,6 +28,7 @@ public class DataSourceProperties {
     private static final String username = dataSourceBinding.getString("jdbc.username");
     private static final String password = dataSourceBinding.getString("jdbc.password");
     private static final String driverClassName = dataSourceBinding.getString("jdbc.driver-class-name");
+    private static final String pluginPath = dataSourceBinding.getString("mybatis.plugin");
 
     public String getUrl() {
         return url;
@@ -43,5 +44,9 @@ public class DataSourceProperties {
 
     public String getDriverClassName() {
         return driverClassName;
+    }
+
+    public String getPluginPath() {
+        return pluginPath;
     }
 }

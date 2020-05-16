@@ -1,14 +1,17 @@
 package com.zy.mybatis.v1;
 
 
+import com.zy.mybatis.v1.Executor.Executor;
+import com.zy.mybatis.v1.Executor.SimpleExecutor;
+
 public class ZYSqlSession {
 
     private Configuration configuration;
-    private Executor executor;
+    private Executor simpleExecutor;
 
-    public ZYSqlSession(Configuration configuration,Executor executor){
+    public ZYSqlSession(Configuration configuration){
         this.configuration = configuration;
-        this.executor = executor;
+        this.simpleExecutor = configuration.newExecutor();
     }
 
     /**
@@ -22,7 +25,7 @@ public class ZYSqlSession {
 
         String sql = configuration.getSql(statementId);
 
-       return (T) executor.query(sql,param);
+       return (T) simpleExecutor.query(sql,param);
 
     }
 

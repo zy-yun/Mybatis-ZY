@@ -1,14 +1,19 @@
-package com.zy.mybatis.v1;
+package com.zy.mybatis.v1.Executor;
 
+import com.zy.mybatis.v1.DataSourceProperties;
+import com.zy.mybatis.v1.Executor.Executor;
 import com.zy.mybatis.v1.domain.Blog;
+import com.zy.mybatis.v1.plugin.InterceptorChain;
 
 import java.sql.*;
 
-public class Executor {
+public class SimpleExecutor implements Executor {
 
     private DataSourceProperties sourceProperties;
 
-    public Executor(DataSourceProperties sourceProperties){
+
+    public SimpleExecutor(DataSourceProperties sourceProperties){
+
         this.sourceProperties = sourceProperties;
     }
 
